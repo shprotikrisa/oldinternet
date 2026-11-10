@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>старый инет by^shprot</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="images/fa.jpg">
+</head>
+<body>
+
+  <!-- Холст для звездочек курсора -->
+  <canvas id="cursor-canvas"></canvas>
+
+  <div class="app-container">
+    
+    <!-- Шапка сайта -->
+    <header class="header-banner">
+      <h1 class="sparkle-text">★ My secret Blog ★</h1>
+      <p class="subtitle">welcome to my secret</p>
+    </header>
+
+    <!-- 1. ВКЛАДКА: МОЙ ПРОФИЛЬ -->
+    <section id="profile-section" class="tab-content">
+      <div class="profile-header">
+        <div class="profile-top">
+
+          <!-- Загрузка аватара -->
+          <label class="avatar-upload-box" for="avatar-input" title="Нажми, чтобы изменить аватар">
+            <img id="avatar-preview" class="avatar-img hidden" src="" alt="Аватар">
+            <span id="avatar-placeholder">ДОБАВИТЬ<br>ФОТО</span>
+          </label>
+
+          <input type="file" id="avatar-input" accept="image/*" class="hidden" />
+
+          <!-- Имя и статус -->
+          <div class="profile-user-info">
+            <h2 class="user-title" id="display-name" title="Двойной клик, чтобы изменить">шмигулі2007</h2>
+            <div class="user-status-box" id="display-status" title="Двойной клик, чтобы изменить">статус: in love...</div>
+          </div>
+
+          <!-- Плеер iPod -->
+          <div class="ipod-widget" id="ipod-widget" title="Нажми, чтобы сменить песню">
+            <div class="ipod-screen">
+              <span class="song-title" id="display-song">song name</span>
+              <span class="song-author" id="display-artist">author</span>
+              <span class="music-icon">.</span>
+            </div>
+            <div class="ipod-wheel"></div>
+          </div>
+
+        </div>
+
+        <!-- Кнопка редактирования профиля -->
+        <button id="edit-profile-btn" class="y2k-btn edit-profile-btn">Редактировать профиль</button>
+
+        <div class="profile-subnav">
+          <button class="subtab-btn active">посты</button>
+          <button class="subtab-btn">фото</button>
+          <button class="subtab-btn">архив</button>
+          <button class="subtab-btn">друзья</button>
+        </div>
+      </div>
+
+      <main class="feed">
+        <article class="post-card flip-phone-card">
+          <div class="phone-wrapper">
+            <div class="phone-screen">
+              <p class="post-text">Heyy! It's my aes!</p>
+            </div>
+          </div>
+
+          <div class="phone-info">
+            <div class="user-avatar-box">
+              <img id="post-avatar-preview" class="post-avatar-img hidden" src="" alt="Ава">
+              <span id="post-avatar-placeholder" class="avatar-label">ава</span>
+            </div>
+
+            <div class="user-details">
+              <div class="user-name" id="post-user-name">шмигулі2007</div>
+              <div class="user-status" id="post-user-status">статус: in love...</div>
+            </div>
+          </div>
+        </article>
+      </main>
+    </section>
+
+
+    <!-- Модальное окно редактирования профиля -->
+    <div id="profile-modal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <h3>Редактирование профиля</h3>
+
+        <label>Имя:</label>
+        <input type="text" id="input-name" class="y2k-input" placeholder="Введи имя...">
+
+        <label>Статус:</label>
+        <input type="text" id="input-status" class="y2k-input" placeholder="Введи статус...">
+
+        <label>Название трека:</label>
+        <input type="text" id="input-song" class="y2k-input" placeholder="Название песни...">
+
+        <label>Исполнитель:</label>
+        <input type="text" id="input-artist" class="y2k-input" placeholder="Исполнитель...">
+
+        <div class="modal-actions">
+          <button id="save-profile-btn" class="y2k-btn pink-btn">Сохранить</button>
+          <button id="close-modal-btn" class="y2k-btn">Отмена</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 2. ВКЛАДКА: ДОБАВИТЬ ПОСТ -->
+    <section id="post-section" class="tab-content hidden">
+      <h2 class="section-title">Создать пост</h2>
+
+      <div class="create-post-box">
+        <input type="text" placeholder="Твое имя..." class="y2k-input" id="post-input-name" />
+        <input type="text" placeholder="Твой статус..." class="y2k-input" id="post-input-status" />
+        <textarea placeholder="Напиши что-нибудь о чем думаешь..." class="y2k-textarea"></textarea>
+        <button class="y2k-btn pink-btn">Отправить на модерацию</button>
+      </div>
+    </section>
+
+
+    <!-- 3. ВКЛАДКА: ФОТКИ (ФОТОБУДКА) -->
+    <section id="photos-section" class="tab-content hidden">
+
+      <h2 class="section-title">Фотобудка</h2>
+
+      <!-- Окно камеры -->
+      <div class="camera-frame-wrapper" id="camera-frame-wrapper">
+        <video id="webcam" autoplay playsinline></video>
+        <img id="frame-overlay-img" src="images/sony.jpg" alt="Frame">
+      </div>
+
+
+      <!-- Управление фотобудкой -->
+      <div class="camera-controls">
+
+        <button id="start-cam-btn" class="y2k-btn">
+          Включить камеру
+        </button>
+
+
+        <!-- Выбор рамки -->
+        <div class="frame-selector">
+          <label>Выбери рамку:</label>
+
+          <div class="frame-options">
+            <button class="frame-btn active" data-frame-img="images/sony.jpg">SonyCam</button>
+            <button class="frame-btn" data-frame-img="images/paint.jpg">Paint</button>
+            <button class="frame-btn" data-frame-img="images/web.jpg">Webring</button>
+            <button class="frame-btn" data-frame-img="images/blue.jpg">StripBlue</button>
+            <button class="frame-btn" data-frame-img="images/green.jpg">StripTeal</button>
+            <button class="frame-btn" data-frame-img="images/tv.jpg">Tele</button>
+            <button class="frame-btn" data-frame-img="images/mp.jpg">mp</button>
+          </div>
+        </div>
+
+
+        <!-- ВЫБОР ЭФФЕКТА -->
+        <div id="photo-effects-panel">
+
+          <h3 class="effects-heading">★ PHOTO EFFECTS ★</h3>
+
+          <p class="effects-description">
+            Choose your aesthetic...
+          </p>
+
+          <div class="effects-buttons">
+
+            <button type="button" class="effect-btn active" data-effect="original">
+              Original
+            </button>
+
+            <button type="button" class="effect-btn" data-effect="vintage">
+              Vintage
+            </button>
+
+            <button type="button" class="effect-btn" data-effect="y2k">
+              Y2K
+            </button>
+
+            <button type="button" class="effect-btn" data-effect="vhs">
+              VHS
+            </button>
+
+            <button type="button" class="effect-btn" data-effect="dreamy">
+              Dreamy
+            </button>
+
+          </div>
+
+
+          <!-- Интенсивность эффекта -->
+          <div class="effect-intensity">
+
+            <div class="intensity-label">
+              <label for="effect-intensity">
+                EFFECT INTENSITY
+              </label>
+
+              <span id="effect-intensity-value">70%</span>
+            </div>
+
+            <input
+              type="range"
+              id="effect-intensity"
+              min="0"
+              max="100"
+              value="70"
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- Кнопка съёмки -->
+        <button id="snap-btn" class="y2k-btn snap-btn" disabled>
+          Сделать фото
+        </button>
+
+      </div>
+
+
+      <!-- Результат фотографии -->
+      <div id="result-container" class="result-container hidden">
+
+        <h3>Твой снимок в рамке:</h3>
+
+        <canvas id="photo-canvas"></canvas>
+
+        <div class="result-actions">
+          <a id="download-link" class="y2k-btn" download="sprSTAR-photo.png">
+            Сохранить фото
+          </a>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- 4. ВКЛАДКА: СВЯЗЬ -->
+    <section id="contact-section" class="tab-content hidden">
+      <h2 class="section-title">Обратная связь</h2>
+
+      <p style="text-align: center; font-size: 0.85rem; padding: 20px;">
+        Из модеров только создьлнца, шпротн @shprotikrisa
+      </p>
+    </section>
+
+
+    <!-- Нижняя панель навигации -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-tab="profile">Мой профиль</button>
+      <button class="nav-btn" data-tab="post">Добавить пост</button>
+      <button class="nav-btn" data-tab="photos">Фотки</button>
+      <button class="nav-btn" data-tab="contact">Связь</button>
+    </nav>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
