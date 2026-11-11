@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>старый инет by^shprot</title>
+  <title>★sprSTAR by^shprot</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="images/fa.jpg">
 </head>
@@ -12,11 +12,101 @@
   <!-- Холст для звездочек курсора -->
   <canvas id="cursor-canvas"></canvas>
 
-  <div class="app-container">
+
+<!-- AUTHENTICATION SCREEN -->
+<section id="auth-screen" class="auth-screen">
+  <div class="auth-box">
+    <h2 class="sparkle-text">★ sprSTAR ★</h2>
+    <p>ф0т04к1, п0сты, к0мьюн1т1</p>
+
+    <div class="auth-tabs">
+      <button type="button" id="show-login" class="y2k-btn active">
+        Войти
+      </button>
+      <button type="button" id="show-signup" class="y2k-btn">
+        Регистрация
+      </button>
+    </div>
+
+    <form id="login-form">
+      <h3>С возвращением!</h3>
+
+      <input
+        type="email"
+        id="login-email"
+        class="y2k-input"
+        placeholder="Электронная почта"
+        required
+      >
+
+      <input
+        type="password"
+        id="login-password"
+        class="y2k-input"
+        placeholder="Пароль"
+        required
+      >
+
+      <button type="submit" class="y2k-btn pink-btn">
+        Войти
+      </button>
+    </form>
+
+    <form id="signup-form" class="hidden">
+      <h3>Создать аккаунт</h3>
+
+      <input
+        type="email"
+        id="signup-email"
+        class="y2k-input"
+        placeholder="Электронная почта"
+        required
+      >
+
+      <input
+        type="password"
+        id="signup-password"
+        class="y2k-input"
+        placeholder="Пароль (минимум 8 символов)"
+        minlength="8"
+        required
+      >
+
+      <button type="submit" class="y2k-btn pink-btn">
+        Зарегистрироваться
+      </button>
+    </form>
+
+    <div id="auth-message" role="status"></div>
+
+    <form id="username-form" class="hidden">
+      <h3>прив !</h3>
+      <p>Придумай себе ник</p>
+
+      <input
+        type="text"
+        id="username-input"
+        class="y2k-input"
+        placeholder="Твой username"
+        minlength="3"
+        maxlength="20"
+        pattern="[a-zA-Z0-9_]+"
+        required
+      >
+
+      <button type="submit" class="y2k-btn pink-btn">
+        Создать профиль
+      </button>
+    </form>
+  </div>
+</section>
+
+
+<div class="app-container hidden" id="main-app">
     
     <!-- Шапка сайта -->
     <header class="header-banner">
-      <h1 class="sparkle-text">★ My secret Blog ★</h1>
+      <h1 class="sparkle-text">★ ★ sprSTAR ★ ★</h1>
       <p class="subtitle">welcome to my secret</p>
     </header>
 
@@ -28,7 +118,7 @@
           <!-- Загрузка аватара -->
           <label class="avatar-upload-box" for="avatar-input" title="Нажми, чтобы изменить аватар">
             <img id="avatar-preview" class="avatar-img hidden" src="" alt="Аватар">
-            <span id="avatar-placeholder">ДОБАВИТЬ<br>ФОТО</span>
+            <span id="avatar-placeholder">ДОБАВИТЬ<br>ФОТО4КУ</span>
           </label>
 
           <input type="file" id="avatar-input" accept="image/*" class="hidden" />
@@ -54,35 +144,139 @@
         <!-- Кнопка редактирования профиля -->
         <button id="edit-profile-btn" class="y2k-btn edit-profile-btn">Редактировать профиль</button>
 
-        <div class="profile-subnav">
-          <button class="subtab-btn active">посты</button>
-          <button class="subtab-btn">фото</button>
-          <button class="subtab-btn">архив</button>
-          <button class="subtab-btn">друзья</button>
-        </div>
+      <div class="profile-subnav">
+  <button class="subtab-btn active" data-profile-tab="posts">п0сты</button>
+  <button class="subtab-btn" data-profile-tab="wall">стенКа</button>
+  <button class="subtab-btn" data-profile-tab="archive">арх1в</button>
+  <button class="subtab-btn" data-profile-tab="friends">дРузья</button>
+</div>
+      </div>
+<!-- Публикации профиля -->
+<div id="profile-posts-content" class="profile-subcontent">
+  <main class="feed" id="posts-feed">
+    <p class="feed-loading">Загружаем публикации...</p>
+  </main>
+</div>
+
+<!-- Фотографии профиля -->
+<div id="profile-photos-content" class="profile-subcontent hidden">
+  <p>Здесь будут фотографии.</p>
+</div>
+
+<!-- Архив профиля -->
+<div id="profile-archive-content" class="profile-subcontent hidden">
+  <h3>Мой архив</h3>
+
+  <div id="archive-posts">
+    <p>Здесь будут приватные публикации.</p>
+  </div>
+</div>
+
+
+<!-- Друзья профиля -->
+<div id="profile-friends-content" class="profile-subcontent hidden">
+
+  <div class="friends-search">
+    <input
+      type="text"
+      id="friends-search-input"
+      placeholder="найти пользователя..."
+      maxlength="30"
+    >
+
+    <button id="friends-search-btn" class="y2k-btn">
+      поиск
+    </button>
+  </div>
+
+  <div id="friends-search-results">
+    <p>Ищи дру3ей в sprSTAR.</p>
+  </div>
+
+  <div class="friends-requests">
+    <h3>Входящие заявки</h3>
+    <div id="incoming-requests">
+      <p>Пока нет заявок.</p>
+    </div>
+  </div>
+
+  <div class="friends-requests">
+  <h3>Отправленные заявки</h3>
+  <div id="outgoing-requests">
+    <p>Ты пока никому не отправляла заявки.</p>
+  </div>
+</div>
+
+  <div class="friends-list">
+    <h3>Мои друзья</h3>
+    <div id="friends-list">
+      <p>Пока здесь никого нет.</p>
+    </div>
+  </div>
+
+</div>
+
+      <!-- СТЕНА ПРОФИЛЯ -->
+<div id="profile-wall-content" class="profile-subcontent hidden">
+
+  <div class="wall-create-box">
+    <h3>Оставить запись на стене</h3>
+
+    <form id="wall-text-form">
+      <textarea
+        id="wall-text-input"
+        maxlength="2000"
+        placeholder="напиши что-нибудь..."
+      ></textarea>
+
+      <button type="submit" class="y2k-btn">
+        Опубликовать запись
+      </button>
+    </form>
+
+    <div class="wall-drawing-tools">
+      <h3>Или нарисуй что-нибудь</h3>
+
+      <div class="wall-canvas-controls">
+        <label>
+          Цвет:
+          <input type="color" id="wall-draw-color" value="#80549b">
+        </label>
+
+        <label>
+          Размер кисти:
+          <input
+            type="range"
+            id="wall-draw-size"
+            min="1"
+            max="20"
+            value="4"
+          >
+        </label>
+
+        <button type="button" id="wall-clear-canvas" class="y2k-btn">
+          0чистить
+        </button>
       </div>
 
-      <main class="feed">
-        <article class="post-card flip-phone-card">
-          <div class="phone-wrapper">
-            <div class="phone-screen">
-              <p class="post-text">Heyy! It's my aes!</p>
-            </div>
-          </div>
+      <canvas id="wall-canvas" width="600" height="350"></canvas>
 
-          <div class="phone-info">
-            <div class="user-avatar-box">
-              <img id="post-avatar-preview" class="post-avatar-img hidden" src="" alt="Ава">
-              <span id="post-avatar-placeholder" class="avatar-label">ава</span>
-            </div>
+      <button type="button" id="wall-publish-drawing" class="y2k-btn">
+        Опубликовать р1сун0к
+      </button>
+    </div>
+  </div>
 
-            <div class="user-details">
-              <div class="user-name" id="post-user-name">шмигулі2007</div>
-              <div class="user-status" id="post-user-status">статус: in love...</div>
-            </div>
-          </div>
-        </article>
-      </main>
+  <div class="wall-entries">
+    <h3>Зап1с1 на стенКе</h3>
+
+    <div id="wall-entries-list">
+      <p>Загружаем стену...</p>
+    </div>
+  </div>
+
+</div>
+
     </section>
 
 
@@ -110,22 +304,99 @@
       </div>
     </div>
 
+    
+<!-- 2. ВКЛАДКА: ДОБАВИТЬ ПОСТ -->
+<section id="post-section" class="tab-content hidden">
+  <h2 class="section-title">Создать пост</h2>
 
-    <!-- 2. ВКЛАДКА: ДОБАВИТЬ ПОСТ -->
-    <section id="post-section" class="tab-content hidden">
-      <h2 class="section-title">Создать пост</h2>
+  <form id="create-post-form" class="create-post-box">
 
-      <div class="create-post-box">
-        <input type="text" placeholder="Твое имя..." class="y2k-input" id="post-input-name" />
-        <input type="text" placeholder="Твой статус..." class="y2k-input" id="post-input-status" />
-        <textarea placeholder="Напиши что-нибудь о чем думаешь..." class="y2k-textarea"></textarea>
-        <button class="y2k-btn pink-btn">Отправить на модерацию</button>
-      </div>
-    </section>
+    <input
+      type="text"
+      class="y2k-input"
+      id="post-input-name"
+      placeholder="Твое имя..."
+      readonly
+    >
+
+    <input
+      type="text"
+      class="y2k-input"
+      id="post-input-status"
+      placeholder="Твой статус..."
+      readonly
+    >
+
+    <textarea
+      id="post-content"
+      class="y2k-textarea"
+      placeholder="Напиши что-нибудь о чем думаешь..."
+      maxlength="2000"
+      required
+    ></textarea>
+
+    <!-- ПРИВАТНОСТЬ ПУБЛИКАЦИИ -->
+
+    <div class="post-privacy">
+      <p class="privacy-title">Кто сможет увидеть публикацию?</p>
+
+      <label>
+        <input
+          type="radio"
+          name="post-privacy"
+          value="public"
+          checked
+        >
+        Публичная — видна всем
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="post-privacy"
+          value="private"
+        >
+        Приватная — только мне
+      </label>
+    </div>
+
+    <!-- ФОТОГРАФИИ -->
+
+    <div class="post-photos">
+      <label for="post-photos-input" class="y2k-btn">
+        Добавить фотографии
+      </label>
+
+      <input
+        type="file"
+        id="post-photos-input"
+        accept="image/jpeg,image/png,image/webp"
+        multiple
+        hidden
+      >
+
+      <div id="post-photos-preview"></div>
+
+      <p id="post-photos-message"></p>
+    </div>
+
+    <button
+      type="submit"
+      id="submit-post-btn"
+      class="y2k-btn pink-btn"
+    >
+      Отправить на модерацию
+    </button>
+
+    <p id="post-message" role="status"></p>
+
+  </form>
+</section>
 
 
     <!-- 3. ВКЛАДКА: ФОТКИ (ФОТОБУДКА) -->
     <section id="photos-section" class="tab-content hidden">
+
 
       <h2 class="section-title">Фотобудка</h2>
 
@@ -252,19 +523,125 @@
         Из модеров только создьлнца, шпротн @shprotikrisa
       </p>
     </section>
+<!-- ПРОФИЛЬ ДРУГОГО ПОЛЬЗОВАТЕЛЯ -->
+<section id="public-profile-section" class="tab-content hidden">
 
+  <button type="button" id="back-to-profile-btn" class="y2k-btn">
+    Назад
+  </button>
 
-    <!-- Нижняя панель навигации -->
-    <nav class="bottom-nav">
-      <button class="nav-btn active" data-tab="profile">Мой профиль</button>
-      <button class="nav-btn" data-tab="post">Добавить пост</button>
-      <button class="nav-btn" data-tab="photos">Фотки</button>
-      <button class="nav-btn" data-tab="contact">Связь</button>
-    </nav>
+  <div class="public-profile-header">
+
+    <img
+      id="public-profile-avatar"
+      class="public-profile-avatar hidden"
+      src=""
+      alt="Аватар пользователя"
+    >
+
+    <div id="public-profile-avatar-placeholder">
+      Нет аватара
+    </div>
+
+    <div class="public-profile-info">
+      <h2 id="public-profile-name">Имя пользователя</h2>
+      <p id="public-profile-username">@username</p>
+      <p id="public-profile-status">Статус</p>
+    </div>
 
   </div>
 
-  <script src="script.js"></script>
+  <div class="public-profile-song">
+    <span id="public-profile-song">Название песни</span>
+    <span id="public-profile-artist">Исполнитель</span>
+  </div>
+
+  <button
+    type="button"
+    id="public-profile-friend-btn"
+    class="y2k-btn hidden"
+  >
+    Добавить в друзья
+  </button>
+
+  <h3>Публикации</h3>
+
+  <div id="public-profile-posts">
+    <p>Загружаем публикации...</p>
+  </div>
+
+<!-- СТЕНА ПУБЛИЧНОГО ПРОФИЛЯ -->
+<div id="public-profile-wall">
+
+  <h3>Стена пользователя</h3>
+
+  <form id="public-wall-text-form">
+    <textarea
+      id="public-wall-text-input"
+      maxlength="2000"
+      placeholder="оставь запись на стене..."
+      required
+    ></textarea>
+
+    <button type="submit" class="y2k-btn">
+      Опубликовать запись
+    </button>
+  </form>
+
+  <div class="public-wall-drawing">
+    <h4>Или нарисуй что-нибудь</h4>
+
+    <label>
+      Цвет:
+      <input type="color" id="public-wall-draw-color" value="#80549b">
+    </label>
+
+    <label>
+      Размер кисти:
+      <input type="range" id="public-wall-draw-size" min="1" max="20" value="4">
+    </label>
+
+    <button type="button" id="public-wall-clear-canvas" class="y2k-btn">
+      Очистить
+    </button>
+
+    <canvas id="public-wall-canvas" width="600" height="350"></canvas>
+
+    <button type="button" id="public-wall-publish-drawing" class="y2k-btn">
+      Опубликовать рисунок
+    </button>
+  </div>
+
+  <div id="public-wall-entries-list">
+    <p>Загружаем стену...</p>
+  </div>
+
+</div>
+
+</section>
+
+    <!-- Нижняя панель навигации -->
+   <nav class="bottom-nav">
+  <button class="nav-btn active" data-tab="profile">М0й пр0ф1ль</button>
+  <button class="nav-btn" data-tab="post">Д0бав1ть п0ст</button>
+  <button class="nav-btn" data-tab="photos">ф0т04к1</button>
+  <button class="nav-btn" data-tab="contact">Связь</button>
+  <button class="nav-btn hidden" data-tab="admin" id="admin-nav-btn">Адм1нка</button>
+</nav>
+
+<!-- АДМИН-ПАНЕЛЬ -->
+<section id="admin-section" class="tab-content hidden">
+  <h2 class="section-title">Панель модерации</h2>
+
+  <div id="admin-posts-list">
+    <p class="feed-loading">Здесь появятся публикации на проверку.</p>
+  </div>
+</section>
+
+  </div>
+
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
